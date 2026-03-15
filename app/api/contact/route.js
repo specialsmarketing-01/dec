@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// cPanel SMTP: use only mail.decnox.com (no IP, no decnox.com)
+// cPanel SMTP: server at 216.198.79.1
 const SMTP = {
-  host: 'mail.decnox.com',
+  host: '216.198.79.1',
   port: 465,
   secure: true,
   user: 'office@decnox.com',
@@ -151,7 +151,7 @@ export async function POST(request) {
 
     let userMessage = errMsg;
     if (errCode === 'ETIMEDOUT' || errCode === 'ECONNREFUSED' || errCode === 'ESOCKET') {
-      userMessage = 'Could not reach mail.decnox.com (connection timed out or blocked). If deployed on Vercel, outbound SMTP is often blocked — deploy where SMTP is allowed (e.g. server at 91.204.209.39) or use an email API like Resend.';
+      userMessage = 'Could not reach the mail server (connection timed out or blocked). If deployed on Vercel, outbound SMTP is often blocked — deploy where SMTP is allowed or use an email API like Resend.';
     }
     return NextResponse.json(
       { success: false, message: userMessage },

@@ -36,15 +36,11 @@ The API route uses **Nodemailer** and reads the email password from an environme
 
 ## 3. SMTP configuration (already in code)
 
-The API uses **only** `mail.decnox.com` as the SMTP host (no IP, no decnox.com).
-
-- **Host:** mail.decnox.com  
+- **Host:** 216.198.79.1 (your mail server)  
 - **Port:** 465  
 - **Secure:** true  
 - **User:** office@decnox.com  
 - **Password:** from `process.env.EMAIL_PASS` (set in `.env.local`)
-
-Your cPanel email server (e.g. at 91.204.209.39) must be reachable when the hostname `mail.decnox.com` is resolved. Ensure DNS for `mail.decnox.com` points to your mail server.
 
 ## 4. What the form does
 
@@ -68,7 +64,7 @@ Your cPanel email server (e.g. at 91.204.209.39) must be reachable when the host
 
 Add `EMAIL_PASS` in Vercel → Project → Settings → Environment Variables, then redeploy.
 
-**Note:** Vercel often **blocks outbound SMTP** (ports 465 and 587). If you see `ETIMEDOUT` or "Could not reach mail.decnox.com", either deploy the site where SMTP is allowed (e.g. your server at 91.204.209.39) or switch the contact API to an email service that uses HTTPS (e.g. Resend, SendGrid).
+**Note:** Vercel often **blocks outbound SMTP** (ports 465 and 587). If you see `ETIMEDOUT` or "Could not reach the mail server", either deploy the site where SMTP is allowed (e.g. your server at 216.198.79.1) or switch the contact API to an email service that uses HTTPS (e.g. Resend, SendGrid).
 
 ## 6. Chatbot
 
@@ -81,10 +77,10 @@ The live chat (opened from the bottom-right toggle) is a basic chatbot that asks
 
 - **“Failed to send message”**  
   - Check `EMAIL_PASS` and that **office@decnox.com** is a valid mailbox.  
-  - Confirm cPanel allows SMTP on port **465** and that `mail.decnox.com` resolves to your mail server (e.g. 91.204.209.39).
+  - Confirm the mail server at **216.198.79.1** allows SMTP on port **465**.
 
-- **“ETIMEDOUT” / “Could not reach mail.decnox.com”**  
-  - The code uses only **mail.decnox.com** (no IP). If the connection times out, (1) **Vercel** and similar hosts often block outbound SMTP — deploy on a server where SMTP is allowed (e.g. your server 91.204.209.39), or (2) ensure **DNS** for `mail.decnox.com` points to your mail server IP.
+- **“ETIMEDOUT” / “Could not reach the mail server”**  
+  - **Vercel** and similar hosts often block outbound SMTP — deploy on a server where SMTP is allowed (e.g. your server 216.198.79.1), or use an email API (e.g. Resend) that sends over HTTPS.
 
 - **Form shows “Message sent successfully” but no email**  
   - Check spam/junk for office@decnox.com.  

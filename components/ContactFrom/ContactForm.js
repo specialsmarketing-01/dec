@@ -28,29 +28,33 @@ const ContactForm = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+    
         if (!validator.allValid()) {
             validator.showMessages();
             return;
         }
+    
         validator.hideMessages();
-
         setSending(true);
         setSubmitStatus(null);
         setSubmitMessage('');
-
+    
         try {
-            const res = await fetch('https://decnox.com/sendmail.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: forms.name.trim(),
-                    email: forms.email.trim(),
-                    message: forms.message.trim(),
-                }),
+            const params = new URLSearchParams();
+            params.append("name", forms.name.trim());
+            params.append("email", forms.email.trim());
+            params.append("message", forms.message.trim());
+    
+            const res = await fetch("https://91.204.209.39/sendmail.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: params.toString()
             });
-
+    
             const data = await res.json().catch(() => ({}));
-
+    
             if (res.ok && data.success) {
                 setSubmitStatus('success');
                 setSubmitMessage('Your message has been sent successfully.');
@@ -59,6 +63,7 @@ const ContactForm = () => {
                 setSubmitStatus('error');
                 setSubmitMessage(data.message || 'Something went wrong. Please try again.');
             }
+    
         } catch (err) {
             setSubmitStatus('error');
             setSubmitMessage(err.message || 'Something went wrong. Please try again.');

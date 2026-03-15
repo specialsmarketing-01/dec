@@ -1,13 +1,14 @@
-
 import React, { Fragment } from 'react';
-import { Dialog, Grid, } from '@mui/material'
+import { Dialog, Grid } from '@mui/material';
 import Contact from './contact';
 import RelatedProject from './related';
 import Image from 'next/image';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../context/translations';
 
-
-const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1img2, }) => {
-
+const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1img2 }) => {
+    const { language } = useLanguage();
+    const tr = (translations[language] || translations.de).projectSingle;
 
     return (
         <Fragment>
@@ -17,9 +18,8 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
                 className="modalWrapper quickview-dialog"
                 maxWidth={maxWidth}
             >
-
                 <Grid className="modalBody modal-body project-modal">
-                    <button className='modal-close' onClick={onClose}><i className='fa fa-close'></i></button>
+                    <button className="modal-close" onClick={onClose}><i className="fa fa-close"></i></button>
                     <div className="tp-project-single-area">
                         <div className="container">
                             <div className="row justify-content-center">
@@ -29,29 +29,18 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
                                             <div className="row align-items-center mb-5">
                                                 <div className="col-lg-7">
                                                     <div className="tp-project-single-title">
-                                                        <h3>{title} Project</h3>
+                                                        <h3>{title} {tr.projectSuffix}</h3>
                                                     </div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Metus dis posuere
-                                                        amet
-                                                        tincidunt commodo, velit. Ipsum, hac nibh fermentum nisi, platea condimentum
-                                                        cursus
-                                                        velit dui. Massa volutpat odio facilisis purus sit elementum. Non.</p>
-                                                    <p>Hac nibh fermentum nisi, platea condimentum cursus velit dui. Massa volutpat
-                                                        odio
-                                                        facilisis purus sit elementum. Non, sed velit dictum quam. Id risus pharetra
-                                                        est, at
-                                                        rhoncus, nec ullamcorper tincidunt. Id aliquet duis sollicitudin diam</p>
+                                                    <p>{tr.introP1}</p>
+                                                    <p>{tr.introP2}</p>
                                                 </div>
                                                 <div className="col-lg-5">
                                                     <div className="tp-project-single-content-des-right">
                                                         <ul>
-                                                            <li>Location :<span>7 Lake Street,London</span></li>
-                                                            <li>Client :<span>wpOceans</span></li>
-                                                            <li>Consult :<span>Harry Johnson</span></li>
-                                                            <li>Project Type :<span>Tonu React</span></li>
-                                                            <li>Duration :<span>6 Month</span></li>
-                                                            <li>Completion :<span>15 Apr 2023</span></li>
-                                                            <li>Share :<span>Creative, Portfolio</span></li>
+                                                            <li>{tr.location}: <span>Marketing</span></li>
+                                                            <li>{tr.client}: <span>DECNOX</span></li>
+                                                            <li>{tr.type}: <span>SEO, Google Ads, Social Media</span></li>
+                                                            <li>{tr.duration}: <span>—</span></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -64,41 +53,29 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
                                             <div className="row">
                                                 <div className="col-lg-6">
                                                     <div className="tp-project-single-title">
-                                                        <h3>Our Strategies</h3>
+                                                        <h3>{tr.strategies}</h3>
                                                     </div>
-                                                    <p>Massa volutpat odio facilisis purus sit elementum. Non, sed velit dictum
-                                                        quam. Id
-                                                        risus pharetra est, at rhoncus, nec ullamcorper tincidunt. Id aliquet duis
-                                                        sollicitudin diam.</p>
+                                                    <p>{tr.strategiesP}</p>
                                                     <ul>
-                                                        <li>Non saed velit dictum quam risus pharetra esta.</li>
-                                                        <li>Id risus pharetra est, at rhoncus, nec ullamcorper tincidunt.</li>
-                                                        <li>Hac nibh fermentum nisi, platea condimentum cursus.</li>
-                                                        <li>Massa volutpat odio facilisis purus sit elementum.</li>
-                                                        <li>Elit curabitur amet risus bibendum.</li>
+                                                        <li>{tr.strategiesLi1}</li>
+                                                        <li>{tr.strategiesLi2}</li>
+                                                        <li>{tr.strategiesLi3}</li>
+                                                        <li>{tr.strategiesLi4}</li>
                                                     </ul>
                                                 </div>
                                                 <div className="col-lg-6">
                                                     <div className="tp-project-single-item-quote">
-                                                        <p>"Amazing looking theme and instantly turns your application into a great
-                                                            looking one. Really shows that pro_ fessionals built this theme up. Very
-                                                            happy with the way the theme looks ."</p>
-                                                        <span>Robert - <span>Yellow Theme</span></span>
+                                                        <p>"{tr.quote}"</p>
+                                                        <span>{tr.quoteAuthor}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="tp-project-single-item">
                                             <div className="tp-project-single-title">
-                                                <h3>Our approach</h3>
+                                                <h3>{tr.approach}</h3>
                                             </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat suspendisse aenean
-                                                tellus augue morbi risus. Sit morbi vitae morbi sed urna sed purus. Orci facilisi
-                                                eros sed pellentesque. Risus id sed tortor sed scelerisque. Vestibulum elit
-                                                elementum, magna id viverra non, velit. Pretium, eros, porttitor fusce auctor vitae
-                                                id. Phasellus scelerisque nibh eleifend vel enim mauris purus. Rutrum vel sem
-                                                adipiscing nisi vulputate molestie scelerisque molestie ultrices. Eu, fusce
-                                                vulputate diam interdum morbi ac a.</p>
+                                            <p>{tr.approachP}</p>
                                         </div>
                                         <div className="tp-project-single-gallery">
                                             <div className="row mt-4">
@@ -118,24 +95,24 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
                                             <div className="row">
                                                 <div className="col-lg-6">
                                                     <div className="tp-project-single-title">
-                                                        <h3>Resieved goals</h3>
+                                                        <h3>{tr.receivedGoals}</h3>
                                                     </div>
                                                     <ul>
-                                                        <li>Non saed velit dictum quam risus pharetra esta.</li>
-                                                        <li>Id risus pharetra est, at rhoncus, nec ullamcorper tincidunt.</li>
-                                                        <li>Hac nibh fermentum nisi, platea condimentum cursus.</li>
-                                                        <li>Massa volutpat odio facilisis purus sit elementum.</li>
+                                                        <li>{tr.resultsLi1}</li>
+                                                        <li>{tr.resultsLi2}</li>
+                                                        <li>{tr.resultsLi3}</li>
+                                                        <li>{tr.resultsLi4}</li>
                                                     </ul>
                                                 </div>
                                                 <div className="col-lg-6 list-widget-s">
                                                     <div className="tp-project-single-title">
-                                                        <h3>Results</h3>
+                                                        <h3>{tr.resultsTitle}</h3>
                                                     </div>
                                                     <ul>
-                                                        <li>Mauris dignissim blandit cursus imperdiet accumsan lorem.</li>
-                                                        <li>Nam id in non sed cras purus nunc et.</li>
-                                                        <li>Mauris orci, cursus nisl odio est adipiscing gravida magna eget.</li>
-                                                        <li>Quis mauris vel felis convallis nulla dignissim.</li>
+                                                        <li>{tr.resultsLi1}</li>
+                                                        <li>{tr.resultsLi2}</li>
+                                                        <li>{tr.resultsLi3}</li>
+                                                        <li>{tr.resultsLi4}</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -144,8 +121,8 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
                                         <div className="tp-project-single-item">
                                             <div className="tp-project-contact-area">
                                                 <div className="tp-contact-title">
-                                                    <h2>Have project in mind? Let's discuss</h2>
-                                                    <p>Get in touch with us to see how we can help you with your project</p>
+                                                    <h2>{tr.contactTitle}</h2>
+                                                    <p>{tr.contactP}</p>
                                                     <p style={{ marginTop: '0.5rem' }}>
                                                         <a href="tel:+436603288530" style={{ color: 'inherit', marginRight: '1rem' }}>+43 660 3288530</a>
                                                         <a href="mailto:office@decnox.com" style={{ color: 'inherit' }}>office@decnox.com</a>
@@ -165,6 +142,6 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
             </Dialog>
         </Fragment>
     );
-}
+};
 export default ProjectSingle;
 

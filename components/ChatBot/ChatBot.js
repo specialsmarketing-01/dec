@@ -137,15 +137,17 @@ const ChatBot = () => {
             setSending(true);
 
             try {
-                const res = await fetch('/api/contact', {
+                const phoneVal = (value || phone || '').trim();
+                const messageBody = phoneVal
+                    ? message.trim() + '\n\nPhone: ' + phoneVal
+                    : message.trim();
+                const res = await fetch('https://decnox.com/sendmail.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: name.trim(),
                         email: email.trim(),
-                        message: message.trim(),
-                        phone: (value || phone || '').trim(),
-                        website: '',
+                        message: messageBody,
                     }),
                 });
                 const data = await res.json().catch(() => ({}));
@@ -175,15 +177,13 @@ const ChatBot = () => {
         setErrorText('');
         (async () => {
             try {
-                const res = await fetch('/api/contact', {
+                const res = await fetch('https://decnox.com/sendmail.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: name.trim(),
                         email: email.trim(),
                         message: message.trim(),
-                        phone: '',
-                        website: '',
                     }),
                 });
                 const data = await res.json().catch(() => ({}));

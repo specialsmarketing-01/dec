@@ -50,32 +50,32 @@ const ServiceSingle = ({ maxWidth, open, onClose, title, description, des2, des3
                                         </div>
                                         <div className="tp-service-single-item list-widget">
                                             <div className="tp-service-single-title">
-                                                <h3>What We Deliver</h3>
+                                                <h3>{tr.deliverTitle}</h3>
                                             </div>
-                                            <p>Every campaign is built on clear goals, audience research, and measurable KPIs. We report on what matters: traffic, leads, and revenue.</p>
+                                            <p>{tr.deliverP}</p>
                                             <ul>
-                                                <li>Strategy and audience research</li>
-                                                <li>Ongoing optimization and A/B testing</li>
-                                                <li>Monthly reporting and insights</li>
-                                                <li>Dedicated account management</li>
-                                                <li>Transparent pricing and no long-term lock-in</li>
+                                                <li>{tr.deliverLi1}</li>
+                                                <li>{tr.deliverLi2}</li>
+                                                <li>{tr.deliverLi3}</li>
+                                                <li>{tr.deliverLi4}</li>
+                                                <li>{tr.deliverLi5}</li>
                                             </ul>
                                         </div>
                                         <div className="tp-service-single-item">
                                             <div className="tp-service-single-title">
-                                                <h3>Our Approach</h3>
+                                                <h3>{tr.approachTitle}</h3>
                                             </div>
-                                            <p>We start by understanding your business, competitors, and target audience. Then we build a custom plan—SEO, paid ads, social, or a full-funnel mix—and execute with clear timelines and deliverables. We focus on channels that drive real growth and scale what works.</p>
+                                            <p>{tr.approachP}</p>
                                         </div>
                                         <div className="tp-service-single-item list-widget">
                                             <div className="tp-service-single-title">
-                                                <h3>How We Work</h3>
+                                                <h3>{tr.workTitle}</h3>
                                             </div>
                                             <ul>
-                                                <li>Discovery and goal-setting</li>
-                                                <li>Strategy and channel selection</li>
-                                                <li>Launch and optimization</li>
-                                                <li>Reporting and iteration</li>
+                                                <li>{tr.workLi1}</li>
+                                                <li>{tr.workLi2}</li>
+                                                <li>{tr.workLi3}</li>
+                                                <li>{tr.workLi4}</li>
                                             </ul>
                                         </div>
                                         <div className="tp-service-single-item">

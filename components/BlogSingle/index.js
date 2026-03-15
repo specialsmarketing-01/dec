@@ -1,21 +1,23 @@
-
 import React, { Fragment } from 'react';
-import Link from 'next/link'
-import { Dialog, Grid, } from '@mui/material'
-import blog3 from '/public/images/blog-details/comments-author/img-1.jpg'
-import blog4 from '/public/images/blog-details/comments-author/img-2.jpg'
-import blog5 from '/public/images/blog-details/comments-author/img-3.jpg'
-import blog6 from '/public/images/blog-details/author.jpg'
-import gl1 from '/public/images/blog-details/1.jpg'
-import gl2 from '/public/images/blog-details/2.jpg'
+import Link from 'next/link';
+import { Dialog, Grid } from '@mui/material';
+import blog3 from '/public/images/blog-details/comments-author/img-1.jpg';
+import blog4 from '/public/images/blog-details/comments-author/img-2.jpg';
+import blog5 from '/public/images/blog-details/comments-author/img-3.jpg';
+import blog6 from '/public/images/blog-details/author.jpg';
+import gl1 from '/public/images/blog-details/1.jpg';
+import gl2 from '/public/images/blog-details/2.jpg';
 import Image from 'next/image';
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../context/translations';
 
 const submitHandler = (e) => {
-    e.preventDefault()
-}
-
+    e.preventDefault();
+};
 
 const BlogSingle = ({ maxWidth, open, onClose, title, bImg, create_at, author, comment }) => {
+    const { language } = useLanguage();
+    const tr = (translations[language] || translations.de).blogSingle;
 
     return (
         <Fragment>
@@ -26,11 +28,11 @@ const BlogSingle = ({ maxWidth, open, onClose, title, bImg, create_at, author, c
                 maxWidth={maxWidth}
             >
                 <Grid className="modalBody modal-body">
-                    <button className='modal-close' onClick={onClose}><i className='fa fa-close'></i></button>
+                    <button className="modal-close" onClick={onClose}><i className="fa fa-close"></i></button>
                     <section className="tp-blog-single-section">
                         <div className="container">
                             <div className="row">
-                                <div className='col col-lg-12 col-12'>
+                                <div className="col col-lg-12 col-12">
                                     <div className="tp-blog-content">
                                         <div className="post format-standard-image">
                                             <div className="entry-media">
@@ -38,17 +40,13 @@ const BlogSingle = ({ maxWidth, open, onClose, title, bImg, create_at, author, c
                                             </div>
                                             <div className="entry-meta">
                                                 <ul>
-                                                    <li><i className="fi flaticon-user"></i> By <Link href="/">{author}</Link> </li>
-                                                    <li><i className="fi flaticon-comment-white-oval-bubble"></i> Comments {comment}</li>
+                                                    <li><i className="fi flaticon-user"></i> {tr.authorLabel}: <Link href="/">{author || tr.authorName}</Link></li>
+                                                    <li><i className="fi flaticon-comment-white-oval-bubble"></i> {tr.comments} {comment}</li>
                                                     <li><i className="fi flaticon-calendar"></i> {create_at}</li>
                                                 </ul>
                                             </div>
                                             <h2>{title}</h2>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful.</p>
-                                            <blockquote>
-                                                Combined with a handful of model sentence structures, generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                                            </blockquote>
-                                            <p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,</p>
+                                            <p>{tr.introText}</p>
 
                                             <div className="gallery">
                                                 <div>
@@ -87,8 +85,8 @@ const BlogSingle = ({ maxWidth, open, onClose, title, bImg, create_at, author, c
                                                 <Link href="/" target="_blank"><Image src={blog6} alt="" /></Link>
                                             </div>
                                             <div className="author-content">
-                                                <Link href="/" className="author-name">Author: Jenny Watson</Link>
-                                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+                                                <Link href="/" className="author-name">{tr.authorLabel}: {tr.authorName}</Link>
+                                                <p>{tr.authorBio}</p>
                                                 <div className="socials">
                                                     <ul className="social-link">
                                                         <li><Link href="/"><i className="ti-facebook"></i></Link></li>

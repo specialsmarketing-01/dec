@@ -1,6 +1,28 @@
-# Contact Form & Email Setup (App Router)
+# Contact Form & Email Setup
 
-The contact form uses the **App Router** API at `app/api/contact/route.js` and sends emails to **office@decnox.com** via your cPanel SMTP server.
+When the site is deployed on **Vercel**, the contact form and chatbot send submissions to a **PHP mail script** on your cPanel server (Vercel blocks outbound SMTP). No `EMAIL_PASS` or Nodemailer is needed for this flow.
+
+## PHP mailer (Vercel deployment)
+
+1. **Upload the script**  
+   Copy `sendmail.php` from this project to your cPanel **public_html** so it is available at:
+   ```text
+   https://decnox.com/sendmail.php
+   ```
+
+2. **What it does**  
+   - Accepts POST (JSON): `name`, `email`, `message`  
+   - Sends email to **office@decnox.com** via PHP `mail()`  
+   - Subject: **New Contact Message from Website**  
+   - Sets **Reply-To** to the sender’s email  
+   - Returns JSON: `{ "success": true|false, "message": "..." }`
+
+3. **Frontend**  
+   The contact form and chatbot POST to `https://decnox.com/sendmail.php` and show the returned message on success or error.
+
+---
+
+The sections below apply if you use the **Next.js API** (e.g. when not on Vercel).
 
 ## 1. Install dependency
 

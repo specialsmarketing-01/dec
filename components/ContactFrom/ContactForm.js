@@ -39,14 +39,13 @@ const ContactForm = () => {
         setSubmitMessage('');
 
         try {
-            const res = await fetch('/api/contact', {
+            const res = await fetch('https://decnox.com/sendmail.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     name: forms.name.trim(),
                     email: forms.email.trim(),
                     message: forms.message.trim(),
-                    website: forms.website, // honeypot
                 }),
             });
 
@@ -54,7 +53,7 @@ const ContactForm = () => {
 
             if (res.ok && data.success) {
                 setSubmitStatus('success');
-                setSubmitMessage('Your message has been sent successfully. We will contact you soon.');
+                setSubmitMessage('Your message has been sent successfully.');
                 setForms({ name: '', email: '', message: '', website: '' });
             } else {
                 setSubmitStatus('error');

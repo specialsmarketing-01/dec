@@ -36,10 +36,15 @@ The API route uses **Nodemailer** and reads the email password from an environme
 
 ## 3. SMTP configuration (already in code)
 
+The API uses **only** `mail.decnox.com` as the SMTP host (no IP, no decnox.com).
+
 - **Host:** mail.decnox.com  
-- **Port:** 587 (STARTTLS) — port 465 is often blocked on Vercel/cloud hosts  
+- **Port:** 465  
+- **Secure:** true  
 - **User:** office@decnox.com  
 - **Password:** from `process.env.EMAIL_PASS` (set in `.env.local`)
+
+Your cPanel email server (e.g. at 91.204.209.39) must be reachable when the hostname `mail.decnox.com` is resolved. Ensure DNS for `mail.decnox.com` points to your mail server.
 
 ## 4. What the form does
 
@@ -61,7 +66,9 @@ The API route uses **Nodemailer** and reads the email password from an environme
    - **Value:** the password for office@decnox.com  
 3. Redeploy the app so the new variable is applied.
 
-The App Router API route is serverless and works on Vercel; no extra configuration is needed.
+Add `EMAIL_PASS` in Vercel → Project → Settings → Environment Variables, then redeploy.
+
+**Note:** Vercel often **blocks outbound SMTP** (ports 465 and 587). If you see `ETIMEDOUT` or "Could not reach mail.decnox.com", either deploy the site where SMTP is allowed (e.g. your server at 91.204.209.39) or switch the contact API to an email service that uses HTTPS (e.g. Resend, SendGrid).
 
 ## 6. Chatbot
 
@@ -73,13 +80,11 @@ The live chat (opened from the bottom-right toggle) is a basic chatbot that asks
   - `EMAIL_PASS` is not set. Add it in `.env.local` (local) or in the host’s env vars (production).
 
 - **“Failed to send message”**  
-  - Check `EMAIL_PASS` and that **office@decnox.com** is a valid mailbox on mail.decnox.com.  
-  - Confirm cPanel allows SMTP on port **587** (and optionally 465) and that the server can reach mail.decnox.com.
+  - Check `EMAIL_PASS` and that **office@decnox.com** is a valid mailbox.  
+  - Confirm cPanel allows SMTP on port **465** and that `mail.decnox.com` resolves to your mail server (e.g. 91.204.209.39).
 
-- **“ETIMEDOUT” / “Could not reach the mail server”**  
-  - The host (e.g. **Vercel**) often blocks outbound SMTP (ports 465 and 587). Options:  
-    1. **Host the site where SMTP is allowed** (e.g. same server as cPanel, or a VPS).  
-    2. **Use an email API** (e.g. [Resend](https://resend.com), SendGrid) that sends over HTTPS instead of SMTP — then the contact API would call their API instead of Nodemailer.
+- **“ETIMEDOUT” / “Could not reach mail.decnox.com”**  
+  - The code uses only **mail.decnox.com** (no IP). If the connection times out, (1) **Vercel** and similar hosts often block outbound SMTP — deploy on a server where SMTP is allowed (e.g. your server 91.204.209.39), or (2) ensure **DNS** for `mail.decnox.com` points to your mail server IP.
 
 - **Form shows “Message sent successfully” but no email**  
   - Check spam/junk for office@decnox.com.  

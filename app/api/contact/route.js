@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// Port 587 (STARTTLS) is often allowed where 465 is blocked (e.g. Vercel)
+// cPanel SMTP: use only mail.decnox.com (no IP, no decnox.com)
 const SMTP = {
   host: 'mail.decnox.com',
-  port: 587,
-  secure: false,
-  requireTLS: true,
+  port: 465,
+  secure: true,
   user: 'office@decnox.com',
   from: '"DECNOX Website" <office@decnox.com>',
 };
@@ -80,12 +79,11 @@ export async function POST(request) {
       host: SMTP.host,
       port: SMTP.port,
       secure: SMTP.secure,
-      requireTLS: SMTP.requireTLS,
       auth: {
         user: SMTP.user,
         pass: emailPass,
       },
-      connectionTimeout: 15000,
+      connectionTimeout: 20000,
       greetingTimeout: 10000,
     });
 
@@ -153,7 +151,7 @@ export async function POST(request) {
 
     let userMessage = errMsg;
     if (errCode === 'ETIMEDOUT' || errCode === 'ECONNREFUSED' || errCode === 'ESOCKET') {
-      userMessage = 'Could not reach the mail server (connection timed out or blocked). If the site is on Vercel or similar hosting, SMTP is often blocked — consider using an email API like Resend. Otherwise try port 465 from your host or check firewall.';
+      userMessage = 'Could not reach mail.decnox.com (connection timed out or blocked). If deployed on Vercel, outbound SMTP is often blocked — deploy where SMTP is allowed (e.g. server at 91.204.209.39) or use an email API like Resend.';
     }
     return NextResponse.json(
       { success: false, message: userMessage },

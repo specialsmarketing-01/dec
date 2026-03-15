@@ -146,6 +146,10 @@ const ProjectSingle = ({ maxWidth, open, onClose, title, pImg, psub1img1, psub1i
                                                 <div className="tp-contact-title">
                                                     <h2>Have project in mind? Let's discuss</h2>
                                                     <p>Get in touch with us to see how we can help you with your project</p>
+                                                    <p style={{ marginTop: '0.5rem' }}>
+                                                        <a href="tel:+436603288530" style={{ color: 'inherit', marginRight: '1rem' }}>+43 660 3288530</a>
+                                                        <a href="mailto:office@decnox.com" style={{ color: 'inherit' }}>office@decnox.com</a>
+                                                    </p>
                                                 </div>
                                                 <div className="tp-contact-form-area">
                                                     <Contact />

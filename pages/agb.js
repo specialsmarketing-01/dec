@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import BackToTop from '../components/backToTop/backToTop';
+import ChatBot from '../components/ChatBot/ChatBot';
 
 const AGB = () => {
     const sectionStyle = { fontSize: '1.35rem', marginTop: '2rem', marginBottom: '0.75rem' };
@@ -96,6 +97,7 @@ const AGB = () => {
             </section>
             <Footer />
             <BackToTop />
+            <ChatBot />
         </>
     );
 };

@@ -16,13 +16,14 @@ const Footer = (props) => {
                         </div>
                     </div>
                     <div className="col-12">
+                        <div className="footer-contact" style={{ marginBottom: '16px', fontSize: '15px' }}>
+                            <a href="tel:+436603288530" style={{ color: 'inherit', textDecoration: 'none', marginRight: '1rem' }}>+43 660 3288530</a>
+                            <a href="mailto:office@decnox.com" style={{ color: 'inherit', textDecoration: 'none' }}>office@decnox.com</a>
+                        </div>
                         <div className="link-widget">
                             <ul>
-                                <li><Link href="/"><i className="ti-facebook"></i></Link></li>
-                                <li><Link href="/"><i className="ti-twitter-alt"></i></Link></li>
-                                <li><Link href="/"><i className="ti-linkedin"></i></Link></li>
-                                <li><Link href="/"><i className="ti-pinterest"></i></Link></li>
-                                <li><Link href="/"><i className="ti-vimeo-alt"></i></Link></li>
+                                <li><a href="https://www.facebook.com/people/Decnox/61580747016472/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="ti-facebook"></i></a></li>
+                                <li><a href="https://www.instagram.com/decnox" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="ti-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>

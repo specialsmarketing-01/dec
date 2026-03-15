@@ -24,6 +24,10 @@ const Hero = () => {
                             <div className="btns">
                                 <Link activeClass="active" to="contact" spy={true} smooth={true} duration={500} offset={-95} className="theme-btn">{t('hero.cta')}</Link>
                             </div>
+                            <div style={{ marginTop: '1rem', fontSize: '0.95rem', opacity: 0.9 }}>
+                                <a href="tel:+436603288530" style={{ color: 'inherit', marginRight: '1rem' }}>+43 660 3288530</a>
+                                <a href="mailto:office@decnox.com" style={{ color: 'inherit' }}>office@decnox.com</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,9 +39,8 @@ const Hero = () => {
             </div>
             <div className="social-link">
                 <ul>
-                    <li><NavLink href="/">Facebook</NavLink></li>
-                    <li><NavLink href="/">Twitter</NavLink></li>
-                    <li><NavLink href="/">Instagram</NavLink></li>
+                    <li><a href="https://www.facebook.com/people/Decnox/61580747016472/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/decnox" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 </ul>
             </div>
             <div className="visible-text">

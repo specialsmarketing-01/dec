@@ -101,6 +101,10 @@ const ServiceSingle = ({ maxWidth, open, onClose, title, description, des2, des3
                                                 <div className="tp-contact-title">
                                                     <h2>{tr.readyTitle}</h2>
                                                     <p>{tr.readyP}</p>
+                                                    <p style={{ marginTop: '0.5rem' }}>
+                                                        <a href="tel:+436603288530" style={{ color: 'inherit', marginRight: '1rem' }}>+43 660 3288530</a>
+                                                        <a href="mailto:office@decnox.com" style={{ color: 'inherit' }}>office@decnox.com</a>
+                                                    </p>
                                                 </div>
                                                 <div className="tp-contact-form-area">
                                                     <Contact />

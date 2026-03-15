@@ -13,6 +13,10 @@ const ContactArea = (props) => {
                     <div className="tp-section-title">
                         <h2>{t('contact.h2')}</h2>
                         <p>{t('contact.p')}</p>
+                        <div style={{ marginTop: '1rem', fontSize: '1rem' }}>
+                            <a href="tel:+436603288530" style={{ color: 'inherit', marginRight: '1.5rem' }}>+43 660 3288530</a>
+                            <a href="mailto:office@decnox.com" style={{ color: 'inherit' }}>office@decnox.com</a>
+                        </div>
                     </div>
                     <ContactForm/>
                 </div>

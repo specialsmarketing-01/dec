@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import BackToTop from '../components/backToTop/backToTop';
+import ChatBot from '../components/ChatBot/ChatBot';
 
 const impressumStyle = {
     section: { paddingTop: '120px', paddingBottom: '80px' },
@@ -83,6 +84,7 @@ const Impressum = () => {
             </section>
             <Footer />
             <BackToTop />
+            <ChatBot />
         </>
     );
 };

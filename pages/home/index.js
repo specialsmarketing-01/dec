@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import About from '../../components/about/about';
 import BackToTop from '../../components/backToTop/backToTop';
+import ChatBot from '../../components/ChatBot/ChatBot';
 import ContactArea from '../../components/ContactArea';
 import Hero from '../../components/hero/hero';
 import Marquee from '../../components/marque/marque';
@@ -40,6 +41,7 @@ const HomePage = () => {
             </Element>
             <Footer />
             <BackToTop />
+            <ChatBot />
         </Fragment>
     )
 };

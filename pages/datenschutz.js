@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import BackToTop from '../components/backToTop/backToTop';
+import ChatBot from '../components/ChatBot/ChatBot';
 
 const Datenschutz = () => {
     return (
@@ -98,6 +99,7 @@ const Datenschutz = () => {
             </section>
             <Footer />
             <BackToTop />
+            <ChatBot />
         </>
     );
 };

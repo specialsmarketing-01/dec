@@ -187,13 +187,14 @@
 				}
 
 				@media(max-width:991px) {
-					width: 100%;
-					max-width: 624px; /* 30% larger than 480px for mobile */
+					width: 95%;
+					max-width: 95vw;
 					margin: 0 auto;
 					display: block;
 				}
 
 				@media(max-width:575px) {
+					width: 100%;
 					max-width: 100%;
 				}
 			}

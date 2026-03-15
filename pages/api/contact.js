@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     const name = typeof body.name === 'string' ? body.name.trim() : '';
     const email = typeof body.email === 'string' ? body.email.trim() : '';
     const message = typeof body.message === 'string' ? body.message.trim() : '';
+    const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
 
     if (!name || !email || !message) {
         return res.status(400).json({
@@ -50,6 +51,7 @@ export default async function handler(req, res) {
         text: [
             `Name: ${name}`,
             `Email: ${email}`,
+            ...(phone ? [`Phone: ${phone}`] : []),
             '',
             'Message:',
             message,
@@ -57,6 +59,7 @@ export default async function handler(req, res) {
         html: [
             '<p><strong>Name:</strong> ' + escapeHtml(name) + '</p>',
             '<p><strong>Email:</strong> ' + escapeHtml(email) + '</p>',
+            ...(phone ? ['<p><strong>Phone:</strong> ' + escapeHtml(phone) + '</p>'] : []),
             '<p><strong>Message:</strong></p>',
             '<p>' + escapeHtml(message).replace(/\n/g, '<br>') + '</p>',
         ].join(''),

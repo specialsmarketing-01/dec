@@ -30,6 +30,7 @@ export async function POST(request) {
     const name = typeof body.name === 'string' ? body.name.trim() : '';
     const email = typeof body.email === 'string' ? body.email.trim() : '';
     const message = typeof body.message === 'string' ? body.message.trim() : '';
+    const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
     const honeypot = body[HONEYPOT_FIELD];
 
     if (honeypot) {
@@ -86,6 +87,7 @@ export async function POST(request) {
     const htmlBody = [
       '<p><strong>Name:</strong> ' + escapeHtml(name) + '</p>',
       '<p><strong>Email:</strong> ' + escapeHtml(email) + '</p>',
+      ...(phone ? ['<p><strong>Phone:</strong> ' + escapeHtml(phone) + '</p>'] : []),
       '<p><strong>Message:</strong></p>',
       '<p>' + escapeHtml(message).replace(/\n/g, '<br>') + '</p>',
     ].join('');
@@ -93,6 +95,7 @@ export async function POST(request) {
     const textBody = [
       `Name: ${name}`,
       `Email: ${email}`,
+      ...(phone ? [`Phone: ${phone}`] : []),
       '',
       'Message:',
       message,

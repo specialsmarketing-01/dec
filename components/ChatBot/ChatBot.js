@@ -1,28 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 const STEPS = {
-    message: 0,   // "How can we help?" first
+    message: 0,
     name: 1,
     email: 2,
-    sending: 3,
-    done: 4,
-    error: 5,
+    phone: 3,   // optional
+    sending: 4,
+    done: 5,
+    error: 6,
 };
+
+const STEP_LABELS = ['Your message', 'Your name', 'Your email', 'Phone (optional)'];
 
 const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || '').trim());
 
 const FRIENDLY = {
-    welcome: "Hi there! 👋 I'm your DECNOX assistant. What would you like to know, or how can we help you today?",
-    afterMessage: "I'd love to have our team follow up. What's your name?",
-    thanksName: "Nice to meet you! And what's the best email to reach you?",
-    thanksEmail: "Perfect! Sending this to our team now...",
-    success: "We've got your message and will be in touch soon. Thanks for reaching out! 😊",
-    error: "Oops, something went wrong on our side. Please try again in a moment or use the contact form below.",
-    placeholderMessage: "e.g. I need help with SEO, branding...",
-    placeholderName: "Your name",
+    welcome: "Hi! 👋 I'm your DECNOX assistant. How can we help you today? (You can type a short message, then we'll ask for your name and email so we can get back to you.)",
+    afterMessage: "Thanks! What's your name?",
+    thanksName: "Nice to meet you! What's your email address?",
+    thanksEmail: "Optional: add your phone number so we can call you, or tap Send to skip.",
+    thanksPhone: "Sending everything to our team now...",
+    success: "We've got your details and will be in touch soon. Thanks! 😊",
+    error: "Something went wrong. Please try again or use the contact form.",
+    placeholderMessage: "e.g. I need help with SEO or branding",
+    placeholderName: "Your full name",
     placeholderEmail: "your@email.com",
-    invalidEmail: "That doesn't look like a valid email — could you double-check?",
-    startOver: "Start a new conversation",
+    placeholderPhone: "e.g. +43 660 123456",
+    invalidEmail: "Please enter a valid email address.",
+    startOver: "Start new conversation",
+    skip: "Skip",
+    send: "Send",
 };
 
 const ChatBot = () => {
@@ -31,6 +38,7 @@ const ChatBot = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [phone, setPhone] = useState('');
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [errorText, setErrorText] = useState('');
@@ -49,6 +57,7 @@ const ChatBot = () => {
             setName('');
             setEmail('');
             setMessage('');
+            setPhone('');
             setErrorText('');
         }
     }, [open]);
@@ -112,6 +121,18 @@ const ChatBot = () => {
             setInputValue('');
             setErrorText('');
             addBotMessage(FRIENDLY.thanksEmail);
+            setStep(STEPS.phone);
+            return;
+        }
+
+        if (step === STEPS.phone) {
+            if (value) {
+                addUserMessage(value);
+                setPhone(value);
+                setInputValue('');
+            }
+            setErrorText('');
+            addBotMessage(FRIENDLY.thanksPhone);
             setStep(STEPS.sending);
             setSending(true);
 
@@ -123,6 +144,7 @@ const ChatBot = () => {
                         name: name.trim(),
                         email: email.trim(),
                         message: message.trim(),
+                        phone: (value || phone || '').trim(),
                         website: '',
                     }),
                 });
@@ -145,22 +167,63 @@ const ChatBot = () => {
         }
     };
 
+    const handleSkipPhone = () => {
+        addBotMessage(FRIENDLY.thanksPhone);
+        setStep(STEPS.sending);
+        setSending(true);
+        setInputValue('');
+        setErrorText('');
+        (async () => {
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name.trim(),
+                        email: email.trim(),
+                        message: message.trim(),
+                        phone: '',
+                        website: '',
+                    }),
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    addBotMessage(FRIENDLY.success);
+                    setStep(STEPS.done);
+                } else {
+                    addBotMessage(data.message || FRIENDLY.error);
+                    setStep(STEPS.error);
+                }
+            } catch (err) {
+                addBotMessage(err.message || FRIENDLY.error);
+                setStep(STEPS.error);
+            } finally {
+                setSending(false);
+            }
+        })();
+    };
+
     const canSubmit = step < STEPS.sending && (inputValue || '').trim().length > 0 && !sending;
+    const isPhoneStep = step === STEPS.phone;
     const showInput = open && step !== STEPS.sending && step !== STEPS.done && step !== STEPS.error;
 
     const placeholders = {
         [STEPS.message]: FRIENDLY.placeholderMessage,
         [STEPS.name]: FRIENDLY.placeholderName,
         [STEPS.email]: FRIENDLY.placeholderEmail,
+        [STEPS.phone]: FRIENDLY.placeholderPhone,
     };
 
     return (
         <>
             {open && (
-                <div className="chatbot-window">
+                <div className="chatbot-window" role="dialog" aria-label="Live chat">
                     <div className="chatbot-header">
                         <span className="chatbot-title">Live Chat</span>
                         <span className="chatbot-subtitle">DECNOX</span>
+                        {step < STEPS.sending && step <= STEPS.phone && (
+                            <span className="chatbot-step">Step {step + 1} of 4</span>
+                        )}
                         <button
                             type="button"
                             className="chatbot-close"
@@ -186,23 +249,34 @@ const ChatBot = () => {
                             <div className="chatbot-input-wrap">
                                 <input
                                     ref={inputRef}
-                                    type={step === STEPS.email ? 'email' : 'text'}
+                                    type={step === STEPS.email ? 'email' : step === STEPS.phone ? 'tel' : 'text'}
                                     className="chatbot-input"
                                     placeholder={placeholders[step]}
                                     value={inputValue}
                                     onChange={(e) => setInputValue(e.target.value)}
-                                    aria-label="Your reply"
+                                    aria-label={placeholders[step]}
                                     disabled={sending}
+                                    autoComplete={step === STEPS.email ? 'email' : step === STEPS.name ? 'name' : step === STEPS.phone ? 'tel' : 'off'}
                                 />
                                 <button
                                     type="submit"
                                     className="chatbot-send"
                                     disabled={!canSubmit}
                                     aria-label="Send"
+                                    title="Send"
                                 >
                                     <i className="ti-arrow-right" aria-hidden="true"></i>
                                 </button>
                             </div>
+                            {isPhoneStep && (
+                                <button
+                                    type="button"
+                                    className="chatbot-skip"
+                                    onClick={handleSkipPhone}
+                                >
+                                    {FRIENDLY.skip}
+                                </button>
+                            )}
                         </form>
                     )}
                     {(step === STEPS.done || step === STEPS.error) && (
@@ -216,6 +290,7 @@ const ChatBot = () => {
                                     setName('');
                                     setEmail('');
                                     setMessage('');
+                                    setPhone('');
                                     setInputValue('');
                                 }}
                             >

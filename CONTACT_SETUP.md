@@ -37,8 +37,7 @@ The API route uses **Nodemailer** and reads the email password from an environme
 ## 3. SMTP configuration (already in code)
 
 - **Host:** mail.decnox.com  
-- **Port:** 465 (SSL)  
-- **Secure:** true  
+- **Port:** 587 (STARTTLS) — port 465 is often blocked on Vercel/cloud hosts  
 - **User:** office@decnox.com  
 - **Password:** from `process.env.EMAIL_PASS` (set in `.env.local`)
 
@@ -75,7 +74,12 @@ The live chat (opened from the bottom-right toggle) is a basic chatbot that asks
 
 - **“Failed to send message”**  
   - Check `EMAIL_PASS` and that **office@decnox.com** is a valid mailbox on mail.decnox.com.  
-  - Confirm cPanel allows SMTP on port 465 and that the server can reach mail.decnox.com.
+  - Confirm cPanel allows SMTP on port **587** (and optionally 465) and that the server can reach mail.decnox.com.
+
+- **“ETIMEDOUT” / “Could not reach the mail server”**  
+  - The host (e.g. **Vercel**) often blocks outbound SMTP (ports 465 and 587). Options:  
+    1. **Host the site where SMTP is allowed** (e.g. same server as cPanel, or a VPS).  
+    2. **Use an email API** (e.g. [Resend](https://resend.com), SendGrid) that sends over HTTPS instead of SMTP — then the contact API would call their API instead of Nodemailer.
 
 - **Form shows “Message sent successfully” but no email**  
   - Check spam/junk for office@decnox.com.  

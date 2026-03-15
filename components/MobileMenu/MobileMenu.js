@@ -1,47 +1,29 @@
 import React, { useState } from 'react';
 import ListItem from "@mui/material/List";
-import { Link} from 'react-scroll'
+import { Link as ScrollLink } from 'react-scroll'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useLanguage } from '../../context/LanguageContext'
+import { useTranslation } from '../../context/translations'
 
-const menus = [
-    {
-        id: 1,
-        title: 'Home',
-        link: 'home',
-    },
-    {
-        id: 2,
-        title: 'About',
-        link: 'about',
-    },
-    {
-        id: 3,
-        title: 'Service',
-        link: 'service',
-    },
-    {
-        id: 4,
-        title: 'Portfolio',
-        link: 'portfolio',
-    },
-    {
-        id: 5,
-        title: 'Blog',
-        link: 'blog',
-    },
-    {
-        id: 5,
-        title: 'Contact',
-        link: 'contact',
-    }
-
-]
-
+const menuLinks = [
+    { key: 'home', scrollTo: 'home', href: '/' },
+    { key: 'about', scrollTo: 'about', href: '/#about' },
+    { key: 'services', scrollTo: 'service', href: '/#service' },
+    { key: 'caseStudies', scrollTo: 'project', href: '/#project' },
+    { key: 'blog', scrollTo: 'blog', href: '/#blog' },
+    { key: 'contact', scrollTo: 'contact', href: '/#contact' },
+];
 
 const MobileMenu = () => {
-
     const [menuActive, setMenuState] = useState(false);
+    const router = useRouter();
+    const isHomePage = router.pathname === '/';
+    const { language } = useLanguage();
+    const t = useTranslation(language);
 
     const ClickHandler = () => {
+        setMenuState(false);
         window.scrollTo(10, 0);
     }
 
@@ -53,14 +35,15 @@ const MobileMenu = () => {
                 </div>
 
                 <ul className="responsivemenu">
-                    {menus.map((item, mn) => {
-                        return (
-                            <ListItem key={mn}>
-                            <Link
-                                to={item.link} spy={true} smooth={true}  duration={500} onClick={ClickHandler}>{item.title}</Link>
-                            </ListItem>
-                        )
-                    })}
+                    {menuLinks.map((item, mn) => (
+                        <ListItem key={mn}>
+                            {isHomePage ? (
+                                <ScrollLink to={item.scrollTo} spy={true} smooth={true} duration={500} onClick={ClickHandler}>{t('nav.' + item.key)}</ScrollLink>
+                            ) : (
+                                <Link href={item.href} onClick={ClickHandler}>{t('nav.' + item.key)}</Link>
+                            )}
+                        </ListItem>
+                    ))}
                 </ul>
 
             </div>

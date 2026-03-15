@@ -17,25 +17,25 @@ const HomePage = () => {
     return (
         <Fragment>
             <Navbar />
-            <Element name='home'>
+            <Element name='home' id='home'>
                 <Hero />
             </Element>
-            <Element name='about'>
+            <Element name='about' id='about'>
                 <About />
             </Element>
-            <Element name='service'>
+            <Element name='service' id='service'>
                 <ServiceSection />
             </Element>
             <Marquee />
-            <Element name='project'>
+            <Element name='project' id='project'>
                 <ProjectSection />
             </Element>
             <Testimonial />
-            <Element name='blog'>
+            <Element name='blog' id='blog'>
                 <BlogSection />
             </Element>
             <Pricing />
-            <Element name='contact'>
+            <Element name='contact' id='contact'>
                 <ContactArea />
             </Element>
             <Footer />

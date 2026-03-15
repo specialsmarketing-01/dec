@@ -2,33 +2,32 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import Projects from '../../api/project'
 import ProjectSingle from '../ProjectSingle/ProjectSingle';
-
+import { useLanguage } from '../../context/LanguageContext';
+import { useTranslation } from '../../context/translations';
 
 const ProjectSection = (props) => {
-
     const [open, setOpen] = React.useState(false);
+    const [state, setState] = useState({});
+    const [number, setCount] = useState(3);
+    const [buttonActive, setButtonState] = useState(false);
+    const { language } = useLanguage();
+    const t = useTranslation(language);
 
     function handleClose() {
         setOpen(false);
     }
 
-    const [state, setState] = useState({
-    })
-
-    const [number, setCount] = useState(3);
-    const [buttonActive, setButtonState] = useState(false);
-
     const handleClickOpen = (item) => {
         setOpen(true);
         setState(item)
     }
-    return (
 
+    return (
         <section className="tp-project-section section-padding">
             <div className="container">
                 <div className="tp-section-title">
-                    <span>Our Work</span>
-                    <h2>Digital Marketing Case Studies</h2>
+                    <span>{t('projects.span')}</span>
+                    <h2>{t('projects.h2')}</h2>
                 </div>
                 <div className="tp-project-wrap">
                     <div className="row">
@@ -48,7 +47,7 @@ const ProjectSection = (props) => {
                     </div>
                     <div className={`project-btn ${buttonActive ? "d-none" : ""}`}>
                         <span onClick={() => setButtonState(!buttonActive)}>
-                            <button className="theme-btn" onClick={() => setCount(number + number)}>View all case studies</button>
+                            <button className="theme-btn" onClick={() => setCount(number + number)}>{t('projects.viewAll')}</button>
                         </span>
                     </div>
                 </div>
@@ -56,7 +55,7 @@ const ProjectSection = (props) => {
             <ProjectSingle open={open} onClose={handleClose} title={state.title} pImg={state.ps1img} psub1img1={state.psub1img1} psub1img2={state.psub1img2} />
 
             <div className="visible-rotate-text">
-                <h1>Case Studies</h1>
+                <h1>{t('projects.visibleText')}</h1>
             </div>
         </section>
     );

@@ -188,7 +188,7 @@
 
 				@media(max-width:991px) {
 					width: 100%;
-					max-width: 480px;
+					max-width: 624px; /* 30% larger than 480px for mobile */
 					margin: 0 auto;
 					display: block;
 				}

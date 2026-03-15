@@ -7,16 +7,19 @@ import '../styles/sass/style.scss'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Head from 'next/head';
+import { LanguageProvider } from '../context/LanguageContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div>
-      <Head>
-        <title>DECNOX - Digital Marketing Agency | SEO, Social Media & Google Ads</title>
-        <meta name="description" content="DECNOX delivers data-driven digital marketing: SEO, Google Ads, social media, and web design. Grow traffic, leads, and ROI. Get a free strategy call." />
-      </Head>
-      <Component {...pageProps} />
-    </div>
+    <LanguageProvider>
+      <div>
+        <Head>
+          <title>DECNOX - Digital Marketing Agency | SEO, Social Media & Google Ads</title>
+          <meta name="description" content="DECNOX delivers data-driven digital marketing: SEO, Google Ads, social media, and web design. Grow traffic, leads, and ROI. Get a free strategy call." />
+        </Head>
+        <Component {...pageProps} />
+      </div>
+    </LanguageProvider>
   )
 }
 

@@ -3,8 +3,12 @@ import NavLink from 'next/link'
 import himg from '/public/images/arslan.png'
 import { Link } from 'react-scroll'
 import Image from "next/image";
+import { useLanguage } from '../../context/LanguageContext';
+import { useTranslation } from '../../context/translations';
 
-const Hero =() => {
+const Hero = () => {
+    const { language } = useLanguage();
+    const t = useTranslation(language);
     return (
         <section className="tp-hero-section-1">
             <div className="container">
@@ -12,13 +16,13 @@ const Hero =() => {
                     <div className="col col-xs-7 col-lg-7">
                         <div className="tp-hero-section-text">
                             <div className="tp-hero-title">
-                                <h2>Digital Marketing That Drives Growth</h2>
+                                <h2>{t('hero.title')}</h2>
                             </div>
                             <div className="tp-hero-sub">
-                                <p>SEO • Social Media • Google Ads • Web & Design</p>
+                                <p>{t('hero.sub')}</p>
                             </div>
                             <div className="btns">
-                                <Link activeClass="active" to="contact" spy={true} smooth={true} duration={500} offset={-95} className="theme-btn">Get a Free Strategy Call</Link>
+                                <Link activeClass="active" to="contact" spy={true} smooth={true} duration={500} offset={-95} className="theme-btn">{t('hero.cta')}</Link>
                             </div>
                         </div>
                     </div>
@@ -37,7 +41,7 @@ const Hero =() => {
                 </ul>
             </div>
             <div className="visible-text">
-                <h1>Digital Marketing</h1>
+                <h1>{t('hero.visibleText')}</h1>
             </div>
         </section>
     )

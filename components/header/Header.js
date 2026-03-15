@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-scroll'
+import { Link as ScrollLink } from 'react-scroll'
+import Link from 'next/link'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import NavLink from 'next/link'
+import { useRouter } from 'next/router'
+import { useLanguage } from '../../context/LanguageContext'
+import { useTranslation } from '../../context/translations'
 
 const Header = (props) => {
     const [menuActive, setMenuState] = useState(false);
+    const router = useRouter();
+    const isHomePage = router.pathname === '/';
+    const { language, setLanguage } = useLanguage();
+    const t = useTranslation(language);
 
     const SubmitHandler = (e) => {
         e.preventDefault()
@@ -13,6 +21,15 @@ const Header = (props) => {
     const ClickHandler = () => {
         window.scrollTo(10, 0);
     }
+
+    const navItems = [
+        { to: 'home', href: '/', labelKey: 'home', offset: -100 },
+        { to: 'about', href: '/#about', labelKey: 'about', offset: -95 },
+        { to: 'service', href: '/#service', labelKey: 'services', offset: -95 },
+        { to: 'project', href: '/#project', labelKey: 'caseStudies', offset: -95 },
+        { to: 'blog', href: '/#blog', labelKey: 'blog', offset: -95 },
+        { to: 'contact', href: '/#contact', labelKey: 'contact', offset: -95 },
+    ];
 
     return (
         <header id="header" className={props.topbarNone}>
@@ -34,25 +51,24 @@ const Header = (props) => {
                                 <div id="navbar" className="collapse navbar-collapse navigation-holder">
                                     <button className="menu-close"><i className="ti-close"></i></button>
                                     <ul className="nav navbar-nav mb-2 mb-lg-0">
-                                        <li><Link activeClass="active" to="home" spy={true} smooth={true} duration={500} offset={-100}>Home</Link></li>
-                                        <li>
-                                            <Link activeClass="active" to="about" spy={true} smooth={true} duration={500} offset={-95}>About</Link>
-                                        </li>
-                                        <li><Link activeClass="active" to="service" spy={true} smooth={true} duration={500} offset={-95}>Services</Link></li>
-                                        <li>
-                                            <Link activeClass="active" to="project" spy={true} smooth={true} duration={500} offset={-95}>Case Studies</Link>
-                                        </li>
-                                        <li>
-                                            <Link activeClass="active" to="blog" spy={true} smooth={true} duration={500} offset={-95}>Blog</Link>
-                                        </li>
-                                        <li>
-                                            <Link activeClass="active" to="contact" spy={true} smooth={true} duration={500} offset={-95}>Contact</Link>
-                                        </li>
+                                        {navItems.map((item) => (
+                                            <li key={item.to}>
+                                                {isHomePage ? (
+                                                    <ScrollLink activeClass="active" to={item.to} spy={true} smooth={true} duration={500} offset={item.offset}>{t('nav.' + item.labelKey)}</ScrollLink>
+                                                ) : (
+                                                    <Link href={item.href}>{t('nav.' + item.labelKey)}</Link>
+                                                )}
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
                             <div className="col-lg-3 col-md-2 col-2">
                                 <div className="header-right" id="home">
+                                    <div className="language-switcher" style={{ marginRight: '12px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                        <button type="button" onClick={() => setLanguage('de')} className={language === 'de' ? 'active' : ''} style={{ background: language === 'de' ? 'var(--theme-primary-color, #333)' : 'transparent', color: language === 'de' ? '#fff' : 'inherit', border: '1px solid #ddd', padding: '4px 10px', cursor: 'pointer', borderRadius: '4px', fontSize: '13px', fontWeight: language === 'de' ? 600 : 400 }}>DE</button>
+                                        <button type="button" onClick={() => setLanguage('en')} className={language === 'en' ? 'active' : ''} style={{ background: language === 'en' ? 'var(--theme-primary-color, #333)' : 'transparent', color: language === 'en' ? '#fff' : 'inherit', border: '1px solid #ddd', padding: '4px 10px', cursor: 'pointer', borderRadius: '4px', fontSize: '13px', fontWeight: language === 'en' ? 600 : 400 }}>EN</button>
+                                    </div>
                                     <div className="header-search-form-wrapper">
                                         <div className="cart-search-contact">
                                             <button  className="search-toggle-btn" onClick={() => setMenuState(!menuActive)}><i

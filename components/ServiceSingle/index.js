@@ -1,12 +1,14 @@
-
-import React, { useState, Fragment } from 'react';
-import { Dialog, Grid, } from '@mui/material'
+import React, { Fragment } from 'react';
+import { Dialog, Grid } from '@mui/material'
 import Contact from './contact';
 import Services from '../../api/service'
 import Image from 'next/image';
-
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../context/translations';
 
 const ServiceSingle = ({ maxWidth, open, onClose, title, description, des2, des3, dImg, sImg1, sImg2, }) => {
+    const { language } = useLanguage();
+    const tr = (translations[language] || translations.de).serviceSingle;
 
     return (
         <Fragment>
@@ -78,7 +80,7 @@ const ServiceSingle = ({ maxWidth, open, onClose, title, description, des2, des3
                                         </div>
                                         <div className="tp-service-single-item">
                                             <div className="tp-service-single-title">
-                                                <h3>Related Services</h3>
+                                                <h3>{tr.related}</h3>
                                             </div>
                                             <div className="tp-service-area">
                                                 <div className="row align-items-center">
@@ -87,7 +89,7 @@ const ServiceSingle = ({ maxWidth, open, onClose, title, description, des2, des3
                                                             <div className="tp-service-item">
                                                                 <i className={`fi ${service.icon}`} ></i>
                                                                 <h2>{service.sTitle}</h2>
-                                                                <p>Part of our full digital marketing suite.</p>
+                                                                <p>{tr.relatedDesc}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -97,8 +99,8 @@ const ServiceSingle = ({ maxWidth, open, onClose, title, description, des2, des3
                                         <div className="tp-service-single-item">
                                             <div className="tp-service-contact-area">
                                                 <div className="tp-contact-title">
-                                                    <h2>Ready to grow your brand?</h2>
-                                                    <p>Tell us your goals and we'll put together a custom digital marketing plan.</p>
+                                                    <h2>{tr.readyTitle}</h2>
+                                                    <p>{tr.readyP}</p>
                                                 </div>
                                                 <div className="tp-contact-form-area">
                                                     <Contact />

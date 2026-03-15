@@ -2,31 +2,13 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-const Testimonials = [
-    {
-        name: 'Sarah Chen',
-        title: 'Marketing Director, TechFlow',
-        descriptoion: '"DECNOX took our organic traffic from 5K to 45K in eight months. Their SEO strategy was clear, and the monthly reports made it easy to show results to leadership."',
-    },
-    {
-        name: 'James Okonkwo',
-        title: 'Founder, GreenBite Foods',
-        descriptoion: '"We needed more online orders. The team set up Google Ads and social campaigns, and our conversion rate tripled. They really understand e-commerce."',
-    },
-    {
-        name: 'Emma Rodriguez',
-        title: 'CEO, Bloom Studio',
-        descriptoion: '"From branding to social to SEO—everything under one roof. Our brand visibility has never been stronger. Highly recommend for any business ready to scale."',
-    },
-    {
-        name: 'David Park',
-        title: 'Operations Manager, BuildRight',
-        descriptoion: '"Local SEO and Google Business Profile work brought us consistent leads. DECNOX is responsive, data-driven, and they deliver what they promise."',
-    },
-]
+import { useLanguage } from '../../context/LanguageContext';
+import { translations } from '../../context/translations';
 
 const Testimonial = () => {
+    const { language } = useLanguage();
+    const tr = translations[language] || translations.de;
+    const Testimonials = tr.testimonialList;
 
     var settings = {
         dots: false,
@@ -79,8 +61,8 @@ const Testimonial = () => {
         <section className="tp-testimonial-section section-padding">
             <div className="container">
                 <div className="tp-section-title">
-                    <span>Testimonials</span>
-                    <h2>What Our Clients Say</h2>
+                    <span>{tr.testimonials.span}</span>
+                    <h2>{tr.testimonials.h2}</h2>
                 </div>
 
                 <div className="tp-testimonial-wrap">
@@ -88,7 +70,7 @@ const Testimonial = () => {
                         {Testimonials.map((tstml, tsm) => (
                             <div className="tp-testimonial-item" key={tsm}>
                                 <div className="tp-testimonial-text">
-                                    <p>{tstml.descriptoion}</p>
+                                    <p>{tstml.description}</p>
                                     <span>{tstml.name}</span>
                                 </div>
                             </div>
@@ -97,7 +79,7 @@ const Testimonial = () => {
                 </div>
             </div>
             <div className="visible-rotate-text">
-                <h1>Reviews</h1>
+                <h1>{tr.testimonials.visibleText}</h1>
             </div>
         </section>
     )
